@@ -15,20 +15,9 @@ public class FavQuoteStepDefs {
 	protected ResponseOptions<Response> favQuoteApiResponse;
 
 	@Given("Create a user session for {string} with {string} and {string}")
-	public void create_a_user_session_for_with_and(String pathURL, String login, String password) {
+	public void create_a_user_session_for_with_and(String pathURL) {
 		// Write code here that turns the phrase above into concrete actions
-		String userData = null;
-		try {
-			userData = UserJsonData.getUserJsonData(login, password);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		ResponseOptions<Response> apiResponse = RestAssuredAPICalls.PostOperationWithBody(pathURL, userData);
-		String emailInResponse = apiResponse.getBody().jsonPath().getString("email");
-		org.junit.Assert.assertEquals(apiResponse.statusCode(), 200);
-		Assert.assertEquals(emailInResponse, login);
-		userSessionToken = apiResponse.getBody().jsonPath().get("User-Token");
+		userSessionToken = RestAssuredAPICalls.UserSessionToken(pathURL);
 	}
 
 	@When("User sets quote {string} to favorite")

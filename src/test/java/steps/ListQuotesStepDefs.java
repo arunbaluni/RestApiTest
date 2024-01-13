@@ -29,21 +29,7 @@ public class ListQuotesStepDefs {
 	@Given("Create a user session for {string}")
 	public void create_a_user_session(String pathURL) {
 		// Write code here that turns the phrase above into concrete actions
-		Properties prop = ReadPropertiesUtils.GetUserLoginInfo();
-		String login = prop.getProperty("login");
-		String password = prop.getProperty("password");
-		String userData = null;
-		try {
-			userData = UserJsonData.getUserJsonData(login, password);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		ResponseOptions<Response> apiResponse = RestAssuredAPICalls.PostOperationWithBody(pathURL, userData);
-		String emailInResponse = apiResponse.getBody().jsonPath().getString("email");
-		Assert.assertEquals(apiResponse.statusCode(), 200);
-		Assert.assertEquals(emailInResponse, login);
-		userSessionToken = apiResponse.getBody().jsonPath().get("User-Token");
+		userSessionToken = RestAssuredAPICalls.UserSessionToken(pathURL);
 	}
 
 	@When("User searches for quotes from {string}")
