@@ -14,7 +14,7 @@ public class FavQuoteStepDefs {
 	protected static String userSessionToken;
 	protected ResponseOptions<Response> favQuoteApiResponse;
 
-	@Given("Create a user session for {string} with {string} and {string}")
+	@Given("Create a user session for {string} for favorite quote")
 	public void create_a_user_session_for_with_and(String pathURL) {
 		// Write code here that turns the phrase above into concrete actions
 		userSessionToken = RestAssuredAPICalls.UserSessionToken(pathURL);
